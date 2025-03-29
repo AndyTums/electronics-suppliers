@@ -7,8 +7,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("user/", include("users.urls", namespace="users")),
-    path("supplier/", include("suppliers.urls", namespace="supplier")),
-    path("product/", include("suppliers.urls", namespace="products"))
+    path("company/", include("companies.urls", namespace="companies")),
+    path("product/", include("products.urls", namespace="products"))
 ]
 
 # path('login/', TokenObtainPairView.as_view(permission_classes=(AllowAny,)), name='login'),

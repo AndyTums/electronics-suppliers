@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from suppliers.models import Supplier
+from companies.models import Company
 
 
-class SupplierSerializer(serializers.ModelSerializer):
+class CompanySerializer(serializers.ModelSerializer):
     """ Сериализатор для модели SUPPLIER """
 
     class Meta:
-        model = Supplier
+        model = Company
         fields = '__all__'
