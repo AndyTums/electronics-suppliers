@@ -1,5 +1,9 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils.functional import cached_property
+from django.utils.html import format_html
+
+from config import settings
 
 
 class Company(models.Model):
@@ -34,7 +38,8 @@ class Company(models.Model):
         max_length=10, verbose_name="Номер дома"
     )
     supplier = models.ForeignKey(
-        "self", on_delete=models.SET_NULL, verbose_name="Поставщик", blank=True, null=True)
+        "self", on_delete=models.SET_NULL, verbose_name="Поставщик", blank=True, null=True
+    )
     duty_supplier = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00, verbose_name="Задолженность перед поставщиком"
     )
@@ -46,7 +51,26 @@ class Company(models.Model):
         verbose_name_plural = "Компании"
 
     def __str__(self):
-        return f"Название: {self.title}, Вид деятельности: {self.category}"
+        return self.title
+
+    @cached_property
+    def link(self):
+        """Динамически генерируемая ссылка на поставщика (возвращает URL строкой)"""
+
+        if self.supplier:
+            return f"{settings.BASE_URL}/company/{self.supplier.id}/"
+        return None
+
+    @cached_property
+    def admin_link(self):
+        """Кликабельная ссылка для админки (возвращает HTML)"""
+
+        if self.supplier:
+            url = f"{settings.BASE_URL}/admin/companies/company/{self.supplier.id}/"
+            return format_html('<a href="{}">{}</a>', url, str(self.supplier))
+        return "Поставщик отсутствует"
+
+    admin_link.short_description = "Поставщик"
 
     def clean(self):
         """ Валидация полей """

@@ -1,25 +1,29 @@
 from django.db import models
-from django.core.exceptions import ValidationError
+
+from companies.models import Company
 
 
 class Product(models.Model):
-    """Модель: Компании"""
+    """Модель: ТОВАР"""
 
     title = models.CharField(
-        max_length=150, verbose_name="Название продукта"
+        max_length=150, verbose_name="Название товара"
     )
     model = models.CharField(
-        max_length=150, verbose_name="Модель продукта"
+        max_length=150, verbose_name="Модель товара"
     )
     release_date = models.DateField(
         verbose_name="Дата выпуска"
+    )
+    implementer = models.ManyToManyField(
+        Company, verbose_name="Реализатор", related_name="products"
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = "Продукт"
-        verbose_name_plural = "Продукты"
+        verbose_name = "Товар"
+        verbose_name_plural = "Товары"
 
     def __str__(self):
         return self.title
