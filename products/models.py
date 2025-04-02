@@ -16,7 +16,7 @@ class Product(models.Model):
         verbose_name="Дата выпуска"
     )
     implementer = models.ManyToManyField(
-        Company, verbose_name="Реализатор", related_name="products"
+        Company, verbose_name="Реализатор", related_name="products", blank=True
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -11,11 +11,7 @@ app_name = UsersConfig.name
 router = DefaultRouter()
 router.register("", UserViewSet, basename="users")
 
-urlpatterns = [
-    # path('login/', TokenObtainPairView.as_view(permission_classes=(AllowAny,)), name='login'),
-    # path('token/refresh/', TokenRefreshView.as_view(permission_classes=(AllowAny,)), name='token_refresh'),
-
-]
+urlpatterns = []
 
 urlpatterns += router.urls
 

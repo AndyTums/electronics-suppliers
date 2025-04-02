@@ -8,3 +8,4 @@ class UserAdmin(admin.ModelAdmin):
     """ Функциональность админ панели для модели USER """
 
     list_display = ('id', 'email', 'first_name', 'last_name', 'phone', 'country')
+    list_filter = ('country',)
