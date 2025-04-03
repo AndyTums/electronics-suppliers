@@ -126,3 +126,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.User"
 
 BASE_URL = 'http://localhost:8000'  # Изменить на ваш ДОМЕН
+

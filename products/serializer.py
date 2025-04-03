@@ -8,12 +8,12 @@ class ProductSerializer(serializers.ModelSerializer):
     """ Сериализатор для модели PRODUCT """
 
     # Делаем удобный формат времени
-    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
-    updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = Product
-        fields = ['title', 'model', 'release_date', 'created_at', 'updated_at', 'implementer']
+        fields = ['id', 'title', 'model', 'release_date', 'created_at', 'updated_at', 'implementer']
 
     def to_representation(self, instance):
         """ Преобразования формата вывода API запроса """
@@ -46,6 +46,9 @@ class ProductSerializer(serializers.ModelSerializer):
 
             # Дата добавления продукта в БД
             "created_at": representation['created_at'],
+
+            # Последнее обновление продукта
+            "updated_at": representation['updated_at'],
 
             # Реализаторы продукта
             "implementer": implementer_titles,

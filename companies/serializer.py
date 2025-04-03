@@ -1,20 +1,26 @@
 from rest_framework import serializers
 
 from companies.models import Company
+from products.models import Product
 
 
 class CompanySerializer(serializers.ModelSerializer):
     """ Сериализатор для модели COMPANY """
 
     # Делаем удобный формат времени
-    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
-    updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+
+    products = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.all(),
+        required=False,  # Делаем поле необязательным
+        many=True
+    )
 
     class Meta:
         model = Company
         fields = ('title', 'category', 'email', 'country', 'city', 'street', 'house_number', 'supplier',
-                  'products', 'link', 'duty_supplier', 'created_at', 'updated_at', 'link')
-        read_only_fields = ['duty_supplier', 'created_at', 'updated_at']
+                  'link', 'duty_supplier', 'link', 'created_at', 'products')
+        read_only_fields = ['duty_supplier', ]
 
     def to_representation(self, instance):
         """ Преобразования формата вывода API запроса """
